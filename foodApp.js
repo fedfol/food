@@ -63,7 +63,7 @@ var app = new Vue({
     blockspring.runParsed("query-google-spreadsheet", {
       query: "SELECT *",
       url: "https://docs.google.com/spreadsheets/d/15lJzkHLSIJa3JAQXcBNVpmcNLjEO40mDLFXpFKLogfI/edit?usp=sharing"
-    }, { cache: true, expiry: 7}, function(res) {  $vm.alimenti = JSON.parse(res)["data"] })
+    }, { cache: true, expiry: 7 }, function(res) {  $vm.alimenti = JSON.parse(res)["data"] })
   },
   methods: {
     totale: function () {
