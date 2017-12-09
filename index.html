@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Food</title>
+</head>
+
+<body>
+
+  <div id="app">
+    <totalizer></totalizer>
+    <ul id="alimenti">
+      <alimento-item
+        v-for="item in alimenti"
+        v-bind:alimento="item">
+      </alimento-item>
+    </ul>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://cdn.blockspring.com/blockspring.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+  <script type="text/javascript" src="foodApp.js"></script>
+
+</body>
+
+</html>

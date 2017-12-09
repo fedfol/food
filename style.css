@@ -1,0 +1,40 @@
+body {
+	font-family: sans-serif;
+}
+
+
+#totalizer {
+	margin: 10px;
+	padding: 10px;
+	text-align: center;
+	letter-spacing: 2.5rem;
+	line-height: 5rem;
+}
+#totalizer>div {
+	display: inline-block;
+	text-align: center;
+	letter-spacing: normal;
+	line-height: normal;
+}
+
+
+#alimenti {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.alimento-item {
+	margin: 10px;
+	padding: 10px 20px;
+	border: 1px solid black;
+}
+.alimento-item:hover {
+	background-color: lightgray;
+	cursor: pointer;
+}
+.alimento-item.selected {
+	background-color: lightblue;
+}
+.alimento-item.selected:hover {
+	background-color: gray;
+}
