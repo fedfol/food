@@ -12,7 +12,7 @@
     <totalizer></totalizer>
     <ul id="alimenti">
       <alimento-item
-        v-for="item in alimenti"
+        v-for="item in alimenti.getAll()"
         v-bind:alimento="item">
       </alimento-item>
     </ul>
