@@ -2,16 +2,38 @@ body {
 	font-family: sans-serif;
 }
 
+.button {
+        padding: 10px;
+        border: 1px solid black;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -ms-user-select: none;
+}
+.button:hover {
+	cursor: pointer;
+}
 
 #totalizer {
+	margin: 10px;
+	padding: 10px;
+	text-align: center;
+}
+
+#calorie {
+        font-size: 2rem;
+        font-width: bold;
+}
+
+#composizione {
 	margin: 10px;
 	padding: 10px;
 	text-align: center;
 	letter-spacing: 2.5rem;
 	line-height: 5rem;
 }
-#totalizer>div {
-	display: inline-block;
+#composizione>div {
+        display: inline-block;
 	text-align: center;
 	letter-spacing: normal;
 	line-height: normal;
@@ -26,15 +48,17 @@ body {
 .alimento-item {
 	margin: 10px;
 	padding: 10px 20px;
-	border: 1px solid black;
+        background-color: #f3f3f3;
 }
-.alimento-item:hover {
-	background-color: lightgray;
-	cursor: pointer;
+.alimento-item>div {
+        margin-bottom: 20px;
+}
+.alimento-item>.config {
+        text-align: right;
 }
 .alimento-item.selected {
 	background-color: lightblue;
 }
-.alimento-item.selected:hover {
-	background-color: gray;
+.alimento-item.selected .porzioni {
+	color: gray;
 }

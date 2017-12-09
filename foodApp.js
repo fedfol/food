@@ -1,36 +1,46 @@
 Vue.component('alimento-item', {
   props: ['alimento'],
   template: '<li class="alimento-item"\
-              v-on:click="selectAlimento(alimento)"\
               v-bind:class="{ selected: isSelected }">\
-                {{ alimento.alimento }} - {{ alimento.porzione }} - \
-                {{ alimento.kcal }}kcal\
+                <div class="button descrizione" v-on:click="selectAlimento(alimento)">\
+                  {{ alimento.alimento }} - {{ alimento.porzione }} - \
+                  {{ alimento.kcal }}kcal\
+                </div>\
+                <div class="config">\
+                  <span class="porzioni">\
+                    Porzioni: {{ porzioni }}\
+                    <span class="button" v-on:click="if (!isSelected && porzioni > 1) {porzioni -= 1}">-</span>\
+                    <span class="button" v-on:click="if (!isSelected) {porzioni += 1}">+</span>\
+                  </span>\
+                  <a class="button" target="_blank" :href="alimento.url">i</a>\
+                </div>\
               </li>',
   data: function () {
     return {
-      isSelected: false
+      isSelected: false,
+      porzioni: 1,
     }
   },
   methods: {
     selectAlimento: function (alimento) {
       this.isSelected = !this.isSelected
       if (this.isSelected) {
-        this.$parent.kcal += alimento.kcal
-        this.$parent.proteine += alimento.proteine
-        this.$parent.lipidi += alimento.lipidi
-        this.$parent.carboidrati += alimento.carboidrati
-        this.$parent.fibra += alimento.fibra
+        this.$parent.kcal += alimento.kcal*this.porzioni
+        this.$parent.proteine += alimento.proteine*this.porzioni
+        this.$parent.lipidi += alimento.lipidi*this.porzioni
+        this.$parent.carboidrati += alimento.carboidrati*this.porzioni
+        this.$parent.fibra += alimento.fibra*this.porzioni
       }
       else {
-        this.$parent.kcal -= alimento.kcal
+        this.$parent.kcal -= alimento.kcal*this.porzioni
         if (this.$parent.kcal < 0.01) {this.$parent.kcal = 0}
-        this.$parent.proteine -= alimento.proteine
+        this.$parent.proteine -= alimento.proteine*this.porzioni
         if (this.$parent.proteine < 0.01) {this.$parent.proteine = 0}
-        this.$parent.lipidi -= alimento.lipidi
+        this.$parent.lipidi -= alimento.lipidi*this.porzioni
         if (this.$parent.lipidi < 0.01) {this.$parent.lipidi = 0}
-        this.$parent.carboidrati -= alimento.carboidrati
+        this.$parent.carboidrati -= alimento.carboidrati*this.porzioni
         if (this.$parent.carboidrati < 0.01) {this.$parent.carboidrati = 0}
-        this.$parent.fibra -= alimento.fibra
+        this.$parent.fibra -= alimento.fibra*this.porzioni
         if (this.$parent.fibra < 0.01) {this.$parent.fibra = 0}
       }
     }
@@ -40,11 +50,13 @@ Vue.component('alimento-item', {
 Vue.component('totalizer', {
   props: ['kcal', 'proteine', 'lipidi', 'carboidrati', 'fibra'],
   template: '<div id="totalizer">\
-               <div>KCAL<br>{{ Math.abs(this.$parent.kcal).toFixed(0) }}</div>\
-               <div>PROTEINE<br>{{ Math.abs(this.$parent.proteine).toFixed(1) }}g<br>{{ Math.abs(this.$parent.proteinePerc()).toFixed(0) }}%</div>\
-               <div>LIPIDI<br>{{ Math.abs(this.$parent.lipidi).toFixed(1) }}g<br>{{ Math.abs(this.$parent.lipidiPerc()).toFixed(0) }}%</div>\
-               <div>CARBOIDRATI<br>{{ Math.abs(this.$parent.carboidrati).toFixed(1) }}g<br>{{ Math.abs(this.$parent.carboidratiPerc()).toFixed(0) }}%</div>\
-               <div>FIBRA<br>{{ Math.abs(this.$parent.fibra).toFixed(1) }}g<br>{{ Math.abs(this.$parent.fibraPerc()).toFixed(0) }}%</div>\
+               <div id="calorie">{{ Math.abs(this.$parent.kcal).toFixed(0) }}kcal</div>\
+               <div id="composizione">\
+                 <div>PROTEINE<br>{{ Math.abs(this.$parent.proteine).toFixed(1) }}g<br>{{ Math.abs(this.$parent.proteinePerc()).toFixed(0) }}%</div>\
+                 <div>LIPIDI<br>{{ Math.abs(this.$parent.lipidi).toFixed(1) }}g<br>{{ Math.abs(this.$parent.lipidiPerc()).toFixed(0) }}%</div>\
+                 <div>CARBOIDRATI<br>{{ Math.abs(this.$parent.carboidrati).toFixed(1) }}g<br>{{ Math.abs(this.$parent.carboidratiPerc()).toFixed(0) }}%</div>\
+                 <div>FIBRA<br>{{ Math.abs(this.$parent.fibra).toFixed(1) }}g<br>{{ Math.abs(this.$parent.fibraPerc()).toFixed(0) }}%</div>\
+               </div>\
              </div>',
 })
 
@@ -63,7 +75,7 @@ var app = new Vue({
     blockspring.runParsed("query-google-spreadsheet", {
       query: "SELECT *",
       url: "https://docs.google.com/spreadsheets/d/15lJzkHLSIJa3JAQXcBNVpmcNLjEO40mDLFXpFKLogfI/edit?usp=sharing"
-    }, { cache: true, expiry: 7 }, function(res) {  $vm.alimenti = JSON.parse(res)["data"] })
+    }, { cache: true, expiry: 720 }, function(res) {  $vm.alimenti = JSON.parse(res)["data"] })
   },
   methods: {
     totale: function () {
