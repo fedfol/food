@@ -95,10 +95,10 @@ Vue.component('alimento-item', {
   props: ['alimento'],
   template: '<li class="alimento-item"\
               v-bind:class="{ selected: alimento.selected }">\
-                <div class="button descrizione" v-on:click="toggleSelect(alimento)">\
+                <h3 class="button descrizione" v-on:click="toggleSelect(alimento)">\
                   {{ alimento.alimento }} - {{ alimento.porzione }} - \
                   {{ alimento.kcal }}kcal\
-                </div>\
+                </h3>\
                 <div class="config">\
                   <span class="porzioni">\
                     Porzioni: {{ alimento.qty }}\
@@ -111,6 +111,12 @@ Vue.component('alimento-item', {
   methods: {
     toggleSelect: function (alimento) {
       this.$parent.alimenti.toggleSelected(alimento.id)
+
+      //Porcata ma usanto il metodo di Vue non funzionava
+      document.getElementById("graph-proteine").style.width = Math.abs(this.$parent.alimenti.selectedProperties.proteinePerc) + '%'
+      document.getElementById("graph-lipidi").style.width = Math.abs(this.$parent.alimenti.selectedProperties.lipidiPerc) + '%'
+      document.getElementById("graph-carboidrati").style.width = Math.abs(this.$parent.alimenti.selectedProperties.carboidratiPerc) + '%'
+      document.getElementById("graph-fibra").style.width = Math.abs(this.$parent.alimenti.selectedProperties.fibraPerc) + '%'
     },
     updateProperties: function (alimento) {
       if (alimento.selected) {
@@ -122,14 +128,19 @@ Vue.component('alimento-item', {
 
 Vue.component('totalizer', {
   template: '<div id="totalizer">\
-               <div id="calorie">{{ Math.abs(this.$parent.alimenti.selectedProperties.kcal).toFixed(0) }}kcal</div>\
-               <div id="composizione">\
-                 <div>PROTEINE<br>{{ Math.abs(this.$parent.alimenti.selectedProperties.proteine).toFixed(1) }}g<br>{{ Math.abs(this.$parent.alimenti.selectedProperties.proteinePerc).toFixed(0) }}%</div>\
-                 <div>LIPIDI<br>{{ Math.abs(this.$parent.alimenti.selectedProperties.lipidi).toFixed(1) }}g<br>{{ Math.abs(this.$parent.alimenti.selectedProperties.lipidiPerc).toFixed(0) }}%</div>\
-                 <div>CARBOIDRATI<br>{{ Math.abs(this.$parent.alimenti.selectedProperties.carboidrati).toFixed(1) }}g<br>{{ Math.abs(this.$parent.alimenti.selectedProperties.carboidratiPerc).toFixed(0) }}%</div>\
-                 <div>FIBRA<br>{{ Math.abs(this.$parent.alimenti.selectedProperties.fibra).toFixed(1) }}g<br>{{ Math.abs(this.$parent.alimenti.selectedProperties.fibraPerc).toFixed(0) }}%</div>\
+               <h1 id="calorie">{{ Math.abs(this.$parent.alimenti.selectedProperties.kcal).toFixed(0) }} kcal</h1>\
+               <div id="graph">\
+                 <span id="graph-proteine"></span>\
+                 <span id="graph-lipidi"></span>\
+                 <span id="graph-carboidrati"></span>\
+                 <span id="graph-fibra"></span>\
                </div>\
-             </div>',
+               <div id="graph-legend">\
+                 <span id="graph-proteine-legend"> </span><span>PROTEINE</span>\
+                 <span id="graph-lipidi-legend"> </span><span>LIPIDI</span>\
+                 <span id="graph-carboidrati-legend"> </span><span>CARBOIDRATI</span>\
+                 <span id="graph-fibra-legend"> </span><span>FIBRE</span>\
+               </div>'
 })
 
 

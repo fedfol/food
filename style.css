@@ -1,28 +1,89 @@
+/*
+ * aquamarine #5dfdcb
+ * maya blue #7cc6fe
+ * alice blue f4faff
+ * ube #8789c0
+ * smoky black #08090a
+ */
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
 body {
-	font-family: sans-serif;
+        font-family: 'Source Sans Pro', sans-serif;
+        color: #353b42;
+        background-color: #f4faff;
 }
 
 .button {
         padding: 10px;
-        border: 1px solid black;
         -webkit-user-select: none;
         -moz-user-select: none;
         -khtml-user-select: none;
         -ms-user-select: none;
+        border-radius: 2px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 .button:hover {
 	cursor: pointer;
 }
 
 #totalizer {
-	margin: 10px;
+        width: 80%;
+	margin: 10px auto;
 	padding: 10px;
 	text-align: center;
 }
 
 #calorie {
-        font-size: 2rem;
+        color: #8789c0;
         font-width: bold;
+}
+
+#graph {
+        height: 3rem;
+        border-radius: 2px;
+        background-color: #f3f3f3;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        margin: 0;
+}
+
+#graph span {
+        display: inline-block;
+        height: 100%;
+        box-sizing: border-box;
+        float: left;
+        font-weight: bold;
+        width: 0%;
+        transition: width 0.5s;
+        /*padding: 10px;*/
+}
+
+#graph-legend {
+        text-align: right;
+        margin: 1rem 0rem 3rem 0rem;
+}
+#graph-legend span {
+        display: inline-block;
+        font-size: 0.7rem;
+        padding: 4px;
+        border-radius: 2px;
+        /*box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);*/
+}
+
+#graph-proteine,
+#graph-proteine-legend {
+        background-color: #5bc0eb;
+}
+#graph-lipidi,
+#graph-lipidi-legend {
+        background-color: #fa7921;
+}
+#graph-carboidrati,
+#graph-carboidrati-legend {
+        background-color: #fde74c;
+}
+#graph-fibra,
+#graph-fibra-legend {
+        background-color: #9bc53d;
 }
 
 #composizione {
@@ -31,6 +92,7 @@ body {
 	text-align: center;
 	letter-spacing: 2.5rem;
 	line-height: 5rem;
+        color: #8789c0;
 }
 #composizione>div {
         display: inline-block;
@@ -46,12 +108,14 @@ body {
 	list-style: none;
 }
 .alimenti.selected {
-        border: 1px solid black;
+        /*border: 1px solid black;*/
 }
 .alimento-item {
-	margin: 10px;
+        margin: 1rem;
 	padding: 10px 20px;
-        background-color: #f3f3f3;
+        background-color: #7cc6fe;
+        border-radius: 2px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 .alimento-item>div {
         margin-bottom: 20px;
@@ -60,5 +124,5 @@ body {
         text-align: right;
 }
 .alimento-item.selected {
-	background-color: lightblue;
+	background-color: #5dfdcb;
 }
