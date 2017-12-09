@@ -1,6 +1,8 @@
 class Alimenti {
     constructor () {
         this.alimenti = [];
+        this.selected = [];
+        this.unselected = [];
         this.selectedProperties = {
             kcal: 0,
             proteine: 0,
@@ -19,12 +21,16 @@ class Alimenti {
           query: "SELECT *",
           url: "https://docs.google.com/spreadsheets/d/15lJzkHLSIJa3JAQXcBNVpmcNLjEO40mDLFXpFKLogfI/edit?usp=sharing"
         },
-        { cache: true, expiry: 720 },
-        function(res) {  _this.alimenti = JSON.parse(res)["data"] })
-    }
-
-    getAll() {
-        return this.alimenti;
+        { cache: true, expiry: 72 },
+        function(res) {
+          let a = JSON.parse(res)["data"];
+          a.forEach(function (e) {
+            e.qty = 1;
+            e.selected = false;
+          })
+          _this.alimenti = a;
+          _this.unselected = a;
+        })
     }
 
     getElementById(id) {
@@ -37,6 +43,10 @@ class Alimenti {
 
     getSelected() {
         return this.alimenti.filter(function (e) {return e.selected})
+    }
+
+    getUnselected() {
+        return this.alimenti.filter(function (e) {return !e.selected})
     }
 
     updateSelectedProperties () {
@@ -73,40 +83,39 @@ class Alimenti {
         return true
     }
 
-    toggleSelected(id, qty=1) {
+    toggleSelected(id) {
         this.getElementById(id).selected = !this.getElementById(id).selected
-        if (this.getElementById(id).selected) {this.setQuantity(id, qty)}
-        return this.updateSelectedProperties()
+        this.updateSelectedProperties()
+        this.selected = this.getSelected()
+        this.unselected = this.getUnselected()
     }
 }
 
 Vue.component('alimento-item', {
   props: ['alimento'],
   template: '<li class="alimento-item"\
-              v-bind:class="{ selected: isSelected }">\
+              v-bind:class="{ selected: alimento.selected }">\
                 <div class="button descrizione" v-on:click="toggleSelect(alimento)">\
                   {{ alimento.alimento }} - {{ alimento.porzione }} - \
                   {{ alimento.kcal }}kcal\
                 </div>\
                 <div class="config">\
                   <span class="porzioni">\
-                    Porzioni: {{ porzioni }}\
-                    <span class="button" v-on:click="if (!isSelected && porzioni > 1) {porzioni -= 1}">-</span>\
-                    <span class="button" v-on:click="if (!isSelected) {porzioni += 1}">+</span>\
+                    Porzioni: {{ alimento.qty }}\
+                    <span class="button" v-on:click="if (alimento.qty > 1) {alimento.qty -= 1; updateProperties(alimento)}">-</span>\
+                    <span class="button" v-on:click="alimento.qty += 1; updateProperties(alimento)">+</span>\
                   </span>\
                   <a class="button" target="_blank" :href="alimento.url">i</a>\
                 </div>\
               </li>',
-  data: function () {
-    return {
-      isSelected: false,
-      porzioni: 1,
-    }
-  },
   methods: {
     toggleSelect: function (alimento) {
-      this.isSelected = !this.isSelected
-      this.$parent.alimenti.toggleSelected(alimento.id, this.porzioni)
+      this.$parent.alimenti.toggleSelected(alimento.id)
+    },
+    updateProperties: function (alimento) {
+      if (alimento.selected) {
+        this.$parent.alimenti.updateSelectedProperties()
+      }
     }
   }
 })
@@ -127,32 +136,9 @@ Vue.component('totalizer', {
 var app = new Vue({
   el: '#app',
   data: {
-    alimenti: new Alimenti(),
-    kcal: 0,
-    proteine: 0,
-    lipidi: 0,
-    carboidrati: 0,
-    fibra: 0
+    alimenti: new Alimenti()
   },
-  methods: {
-    totale: function () {
-      return this.proteine + this.lipidi + this.carboidrati + this.fibra
-    },
-    proteinePerc: function () {
-      var perc = 100*this.proteine/this.totale()
-      if (!isNaN(perc)) { return perc} else {return 0}
-    },
-    lipidiPerc: function () {
-      var perc = 100*this.lipidi/this.totale()
-      if (!isNaN(perc)) { return perc} else {return 0}
-    },
-    carboidratiPerc: function () {
-      var perc = 100*this.carboidrati/this.totale()
-      if (!isNaN(perc)) { return perc} else {return 0}
-    },
-    fibraPerc: function () {
-      var perc = 100*this.fibra/this.totale()
-      if (!isNaN(perc)) { return perc} else {return 0}
-    }
+  created: function () {
+      //this.$set(this.results, this.alimenti.getAll())
   }
 });

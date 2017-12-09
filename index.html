@@ -3,6 +3,7 @@
 <head>
   <link rel="stylesheet" href="style.css">
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Food</title>
 </head>
 
@@ -10,9 +11,15 @@
 
   <div id="app">
     <totalizer></totalizer>
-    <ul id="alimenti">
+    <ul class="alimenti selected">
       <alimento-item
-        v-for="item in alimenti.getAll()"
+        v-for="item in alimenti.selected"
+        v-bind:alimento="item">
+      </alimento-item>
+    </ul>
+    <ul class="alimenti">
+      <alimento-item
+        v-for="item in alimenti.unselected"
         v-bind:alimento="item">
       </alimento-item>
     </ul>

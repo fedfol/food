@@ -40,10 +40,13 @@ body {
 }
 
 
-#alimenti {
+.alimenti {
 	padding: 0;
 	margin: 0;
 	list-style: none;
+}
+.alimenti.selected {
+        border: 1px solid black;
 }
 .alimento-item {
 	margin: 10px;
@@ -58,7 +61,4 @@ body {
 }
 .alimento-item.selected {
 	background-color: lightblue;
-}
-.alimento-item.selected .porzioni {
-	color: gray;
 }
