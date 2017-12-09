@@ -121,6 +121,11 @@ Vue.component('alimento-item', {
     updateProperties: function (alimento) {
       if (alimento.selected) {
         this.$parent.alimenti.updateSelectedProperties()
+        //Porcata ma usanto il metodo di Vue non funzionava
+        document.getElementById("graph-proteine").style.width = Math.abs(this.$parent.alimenti.selectedProperties.proteinePerc) + '%'
+        document.getElementById("graph-lipidi").style.width = Math.abs(this.$parent.alimenti.selectedProperties.lipidiPerc) + '%'
+        document.getElementById("graph-carboidrati").style.width = Math.abs(this.$parent.alimenti.selectedProperties.carboidratiPerc) + '%'
+        document.getElementById("graph-fibra").style.width = Math.abs(this.$parent.alimenti.selectedProperties.fibraPerc) + '%'
       }
     }
   }
