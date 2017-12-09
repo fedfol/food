@@ -95,17 +95,24 @@ Vue.component('alimento-item', {
   props: ['alimento'],
   template: '<li class="alimento-item"\
               v-bind:class="{ selected: alimento.selected }">\
-                <h3 class="button descrizione" v-on:click="toggleSelect(alimento)">\
-                  {{ alimento.alimento }} - {{ alimento.porzione }} - \
-                  {{ alimento.kcal }}kcal\
-                </h3>\
+               <h3 class="descrizione">\
+                  {{ alimento.alimento }}  <a target="_blank" :href="alimento.url"><i class="fas fa-external-link-alt"></i></a>\
+               </h3>\
+               <p>\
+                  {{ alimento.porzione }} - {{ alimento.kcal }}kcal\
+               </p>\
+               <div class="alimento-graph">\
+                 <span class="alimento-graph-proteine" :style="{ width: getPerc(alimento).proteine }"></span>\
+                 <span class="alimento-graph-lipidi" :style="{ width: getPerc(alimento).lipidi }"></span>\
+                 <span class="alimento-graph-carboidrati" :style="{ width: getPerc(alimento).carboidrati }"></span>\
+                 <span class="alimento-graph-fibra" :style="{ width: getPerc(alimento).fibra }"></span>\
+               </div>\
                 <div class="config">\
                   <span class="porzioni">\
-                    Porzioni: {{ alimento.qty }}\
-                    <span class="button" v-on:click="if (alimento.qty > 1) {alimento.qty -= 1; updateProperties(alimento)}">-</span>\
-                    <span class="button" v-on:click="alimento.qty += 1; updateProperties(alimento)">+</span>\
+                    <span class="button minus" v-on:click="if (alimento.qty > 1) {alimento.qty -= 1; updateProperties(alimento)}">-</span>\
+                    <span class="button add" v-on:click="toggleSelect(alimento)">SELECT x{{ alimento.qty }}</span>\
+                    <span class="button plus" v-on:click="alimento.qty += 1; updateProperties(alimento)">+</span>\
                   </span>\
-                  <a class="button" target="_blank" :href="alimento.url">i</a>\
                 </div>\
               </li>',
   methods: {
@@ -127,6 +134,24 @@ Vue.component('alimento-item', {
         document.getElementById("graph-carboidrati").style.width = Math.abs(this.$parent.alimenti.selectedProperties.carboidratiPerc) + '%'
         document.getElementById("graph-fibra").style.width = Math.abs(this.$parent.alimenti.selectedProperties.fibraPerc) + '%'
       }
+    },
+    getPerc: function(alimento) {
+        let perc = {
+            proteine: "",
+            lipidi: "",
+            carboidrati: "",
+            fibra: ""
+        }
+        let total = alimento.proteine + alimento.lipidi + alimento.carboidrati + alimento.fibra;
+
+        if (total > 0) {
+            perc.proteine = alimento.proteine*100/total + '%';
+            perc.lipidi = alimento.lipidi*100/total + '%';
+            perc.carboidrati = alimento.carboidrati*100/total + '%';
+            perc.fibra = alimento.fibra*100/total + '%';
+        }
+
+        return perc
     }
   }
 })

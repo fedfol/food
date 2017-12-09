@@ -7,14 +7,27 @@
  */
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
 
+* {
+        box-sizing: border-box;
+}
+
 body {
         font-family: 'Source Sans Pro', sans-serif;
         color: #353b42;
         background-color: #f4faff;
 }
 
+a:link, a:visited {
+        color: #353b42;
+        text-decoration: none;
+}
+a:hover, a:active {
+        color: #353b42;
+}
+
 .button {
         padding: 10px;
+        margin:5px;
         -webkit-user-select: none;
         -moz-user-select: none;
         -khtml-user-select: none;
@@ -112,17 +125,82 @@ body {
 }
 .alimento-item {
         margin: 1rem;
-	padding: 10px 20px;
+	padding: 10px 20px 20px 20px;
         background-color: #7cc6fe;
         border-radius: 2px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        position: relative;
 }
-.alimento-item>div {
-        margin-bottom: 20px;
+.alimento-item .descrizione {
+    margin: 0;
+}
+.alimento-item p {
+    margin: 0 0 10px 0;
+}
+.alimento-item .descrizione:first-letter,
+.alimento-item p:first-letter {
+    text-transform: capitalize;
 }
 .alimento-item>.config {
-        text-align: right;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
 }
+.alimento-item .plus,
+.alimento-item .minus {
+    text-align: center;
+    display: inline-block;
+    width: 30px;
+}
+.alimento-item .add {
+    color: #8789c0;
+    background-color: #e6ebe0
+}
+.alimento-item .plus {
+    margin-left: 2px;
+    background-color: #8789c0;
+    color: #f4faff
+}
+.alimento-item .minus {
+    margin-right: 2px;
+    background-color: #8789c0;
+    color: #f4faff
+}
+
 .alimento-item.selected {
 	background-color: #5dfdcb;
+}
+.alimento-item.selected .add {
+    background-color: #8789c0;
+    color: #f4faff
+}
+
+.alimento-graph {
+        height: 1rem;
+        width: 40%;
+        border-radius: 2px;
+        margin: 0;
+}
+
+.alimento-graph span {
+        display: inline-block;
+        height: 100%;
+        box-sizing: border-box;
+        float: left;
+        font-weight: bold;
+        width: 0%;
+        /*padding: 10px;*/
+}
+
+.alimento-graph-proteine {
+        background-color: #5bc0eb;
+}
+.alimento-graph-lipidi {
+        background-color: #fa7921;
+}
+.alimento-graph-carboidrati {
+        background-color: #fde74c;
+}
+.alimento-graph-fibra {
+        background-color: #9bc53d;
 }
