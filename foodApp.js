@@ -158,19 +158,30 @@ Vue.component('alimento-item', {
 
 Vue.component('totalizer', {
   template: '<div id="totalizer">\
+             <div class="wrapper">\
                <h1 id="calorie">{{ Math.abs(this.$parent.alimenti.selectedProperties.kcal).toFixed(0) }} kcal</h1>\
                <div id="graph">\
-                 <span id="graph-proteine"></span>\
-                 <span id="graph-lipidi"></span>\
-                 <span id="graph-carboidrati"></span>\
-                 <span id="graph-fibra"></span>\
+                 <div class="graph">\
+                   <span id="graph-proteine"></span>\
+                   <span id="graph-lipidi"></span>\
+                   <span id="graph-carboidrati"></span>\
+                   <span id="graph-fibra"></span>\
+                 </div>\
+                 <div id="graph-reference">\
+                   <span id="graph-proteine-reference" style="width: 10%"></span>\
+                   <span id="graph-lipidi-reference" style="width: 25%"></span>\
+                   <span id="graph-carboidrati-reference" style="width: 55%"></span>\
+                   <span id="graph-fibra-reference" style="width: 10%"></span>\
+                 </div>\
                </div>\
                <div id="graph-legend">\
                  <span id="graph-proteine-legend"> </span><span>PROTEINE</span>\
                  <span id="graph-lipidi-legend"> </span><span>LIPIDI</span>\
                  <span id="graph-carboidrati-legend"> </span><span>CARBOIDRATI</span>\
                  <span id="graph-fibra-legend"> </span><span>FIBRE</span>\
-               </div>'
+               </div>\
+             </div>\
+             </div>'
 })
 
 
