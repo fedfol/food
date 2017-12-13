@@ -3,17 +3,29 @@ class Alimenti {
         this.alimenti = [];
         this.selected = [];
         this.unselected = [];
+        this.suggested = [];
         this.selectedProperties = {
             kcal: 0,
             proteine: 0,
             lipidi: 0,
             carboidrati: 0,
             fibra: 0,
+            totale: 0,
             proteinePerc: 0,
             lipidiPerc: 0,
             carboidratiPerc: 0,
             fibraPerc: 0
-        }
+        };
+        this.mediterranean = {
+            proteine: 10,
+            lipidi: 25,
+            carboidrati: 55,
+            fibra: 10,
+            proteinePerc: '10%',
+            lipidiPerc: '25%',
+            carboidratiPerc: '55%',
+            fibraPerc: '10%'
+        };
         let _this = this;
 
         //Populate from google sheets
@@ -69,18 +81,50 @@ class Alimenti {
                 _this.selectedProperties.fibra += e.fibra*e.qty;
             })
 
-        let total = this.selectedProperties.proteine +
-                    this.selectedProperties.lipidi +
-                    this.selectedProperties.carboidrati +
-                    this.selectedProperties.fibra;
+        this.totale = this.selectedProperties.proteine +
+                      this.selectedProperties.lipidi +
+                      this.selectedProperties.carboidrati +
+                      this.selectedProperties.fibra;
 
-        if (total > 0) {
-            this.selectedProperties.proteinePerc = 100*this.selectedProperties.proteine/total;
-            this.selectedProperties.lipidiPerc = 100*this.selectedProperties.lipidi/total;
-            this.selectedProperties.carboidratiPerc = 100*this.selectedProperties.carboidrati/total;
-            this.selectedProperties.fibraPerc = 100*this.selectedProperties.fibra/total;
+        if (this.totale > 0) {
+            this.selectedProperties.proteinePerc = 100*this.selectedProperties.proteine/this.totale;
+            this.selectedProperties.lipidiPerc = 100*this.selectedProperties.lipidi/this.totale;
+            this.selectedProperties.carboidratiPerc = 100*this.selectedProperties.carboidrati/this.totale;
+            this.selectedProperties.fibraPerc = 100*this.selectedProperties.fibra/this.totale;
         }
         return true
+    }
+
+    updateSuggested() {
+        let optimal = {
+            p: (this.mediterranean.proteine*this.selectedProperties.totale)/100 - this.selectedProperties.proteine,
+            l: (this.mediterranean.lipidi*this.selectedProperties.totale)/100 - this.selectedProperties.lipidi,
+            c: (this.mediterranean.carboidrati*this.selectedProperties.totale)/100 - this.selectedProperties.carboidrati,
+            f: (this.mediterranean.fibra*this.selectedProperties.totale)/100 - this.selectedProperties.fibra
+        }
+
+        this.suggested = []
+        let distances = []
+        let _this = this
+
+        this.unselected.forEach(function (e) {
+            let distance = Math.pow(optimal.p-e.proteine, 2) +
+                           Math.pow(optimal.l-e.lipidi, 2) +
+                           Math.pow(optimal.c-e.carboidrati, 2) +
+                           Math.pow(optimal.f-e.fibra, 2)
+            if (distances.length > 0) {
+                if (distances[0] > distance) {
+                    distances.unshift(distance)
+                    _this.suggested.unshift(e)
+                } else {
+                    distances.push(distance)
+                    _this.suggested.push(e)
+                }
+            } else {
+                distances.push(distance)
+                _this.suggested.push(e)
+            }
+        })
     }
 
     toggleSelected(id) {
@@ -88,6 +132,7 @@ class Alimenti {
         this.updateSelectedProperties()
         this.selected = this.getSelected()
         this.unselected = this.getUnselected()
+        this.updateSuggested()
     }
 }
 
@@ -168,10 +213,10 @@ Vue.component('totalizer', {
                    <span id="graph-fibra"></span>\
                  </div>\
                  <div id="graph-reference">\
-                   <span id="graph-proteine-reference" style="width: 10%"></span>\
-                   <span id="graph-lipidi-reference" style="width: 25%"></span>\
-                   <span id="graph-carboidrati-reference" style="width: 55%"></span>\
-                   <span id="graph-fibra-reference" style="width: 10%"></span>\
+                   <span id="graph-proteine-reference" :style="{ width: this.$parent.alimenti.mediterranean.proteinePerc }"></span>\
+                   <span id="graph-lipidi-reference" :style="{ width: this.$parent.alimenti.mediterranean.lipidiPerc }"></span>\
+                   <span id="graph-carboidrati-reference" :style="{ width: this.$parent.alimenti.mediterranean.carboidratiPerc }"></span>\
+                   <span id="graph-fibra-reference" :style="{ width: this.$parent.alimenti.mediterranean.fibraPerc }"></span>\
                  </div>\
                </div>\
                <div id="graph-legend">\
