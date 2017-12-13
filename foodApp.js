@@ -42,6 +42,7 @@ class Alimenti {
           })
           _this.alimenti = a;
           _this.unselected = a;
+          _this.updateSuggested();
         })
     }
 
