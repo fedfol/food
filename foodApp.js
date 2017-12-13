@@ -229,11 +229,26 @@ Vue.component('totalizer', {
              </div>'
 })
 
+Vue.component('suggested', {
+  data: function () {
+      return {
+          isOpen: false
+      }
+  },
+  methods: {
+      toggleOpen: function () {
+          this.isOpen = !thisOpen;
+          console.log("called")
+      }
+  }
+})
+
 
 var app = new Vue({
   el: '#app',
   data: {
-    alimenti: new Alimenti()
+    alimenti: new Alimenti(),
+    isOpen: false
   },
   created: function () {
       //this.$set(this.results, this.alimenti.getAll())

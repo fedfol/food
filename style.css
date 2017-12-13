@@ -244,3 +244,35 @@ a:hover, a:active {
 .alimento-graph-fibra {
         background-color: #9bc53d;
 }
+
+#suggested {
+        position: fixed;
+        bottom: -168px;
+        left: 0;
+        width: 100%;
+        height: 222px;
+        transition: bottom 0.3s ease;
+        background-color: white;
+        border-top: 1px solid lightgray;
+        z-index: 999;
+        white-space: nowrap;
+        overflow-x: scroll;
+        padding-top: 38px;
+}
+#suggested.open {
+        bottom: 0px;
+}
+.suggested-buttons {
+        text-align: center;
+        background-color: white;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+}
+.button.suggestion {
+        display: inline-block;
+        text-align: center;
+        background-color: #fa7921;
+        color: white;
+}

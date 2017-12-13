@@ -23,6 +23,17 @@
         v-bind:alimento="item">
       </alimento-item>
     </ul>
+    <div id="suggested" v-bind:class="{ open: isOpen }">
+      <div class="suggested-buttons">
+        <div class="button suggestion" v-on:click="isOpen = !isOpen">HELP ME</div>
+      </div>
+      <ul class="alimenti suggested">
+        <alimento-item
+          v-for="item in alimenti.suggested"
+          v-bind:alimento="item">
+        </alimento-item>
+      </ul>
+      </div>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
