@@ -271,7 +271,8 @@ a:hover, a:active {
 }
 .alimenti.suggested {
         overflow-x: scroll;
-        -webkit-overflow scrolling: touch;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
         white-space: nowrap;
 }
 .alimenti.suggested .alimento-item {
