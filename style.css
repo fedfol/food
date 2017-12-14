@@ -255,9 +255,6 @@ a:hover, a:active {
         background-color: white;
         border-top: 1px solid lightgray;
         z-index: 999;
-        white-space: nowrap;
-        overflow-x: scroll;
-        padding-top: 38px;
 }
 #suggested.open {
         bottom: 0px;
@@ -265,14 +262,20 @@ a:hover, a:active {
 .suggested-buttons {
         text-align: center;
         background-color: white;
-        position: absolute;
-        top: 0;
-        left: 0;
         width: 100%;
 }
 .button.suggestion {
-        display: inline-block;
         text-align: center;
         background-color: #fa7921;
         color: white;
+}
+.alimenti.suggested {
+        overflow-x: scroll;
+        -webkit-overflow scrolling: touch;
+        white-space: nowrap;
+}
+.alimenti.suggested .alimento-item {
+    display: inline-block;
+    width: 90%;
+    margin: 16px;
 }
