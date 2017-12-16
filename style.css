@@ -263,10 +263,10 @@ a:hover, a:active {
 
 #suggested {
         position: fixed;
-        bottom: -168px;
+        bottom: -148px;
         left: 0;
         width: 100%;
-        height: 222px;
+        height: 204px;
         transition: bottom 0.3s ease;
         background-color: white;
         border-top: 1px solid lightgray;
