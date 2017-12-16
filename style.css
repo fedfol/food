@@ -162,9 +162,12 @@ a:hover, a:active {
 .alimenti.selected {
         margin-top: 176px;
 }
+.alimenti.unselected {
+        margin-bottom: 70px;
+}
 .alimento-item {
         margin: 16px;
-	padding: 10px 8px 8px 20px;
+	padding: 10px 4px 8px 20px;
         background-color: #7cc6fe;
         border-radius: 2px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -174,7 +177,7 @@ a:hover, a:active {
     margin: 0;
 }
 .alimento-item p {
-    margin: 0 0 10px 0;
+    margin: 0;
 }
 .alimento-item .descrizione:first-letter,
 .alimento-item p:first-letter {
@@ -186,6 +189,9 @@ a:hover, a:active {
         /*right: 10px;*/
         text-align: right;
 }
+.porzioni {
+    display: none;
+}
 .alimento-item .plus,
 .alimento-item .minus {
     text-align: center;
@@ -193,8 +199,13 @@ a:hover, a:active {
     width: 30px;
 }
 .alimento-item .add {
+    display: inline-block;
     color: #8789c0;
-    background-color: #e6ebe0
+    background-color: #e6ebe0;
+    height: 2rem;
+    margin-bottom: 1rem;
+    line-height: 2rem;
+    padding: 0 10px;
 }
 .alimento-item .plus {
     margin-left: 2px;
@@ -216,8 +227,11 @@ a:hover, a:active {
 }
 
 .alimento-graph {
+        position: absolute;
+        bottom: 0;
+        left: 0;
         height: 1rem;
-        width: 40%;
+        width: 100%;
         border-radius: 2px;
         margin: 0;
 }
@@ -234,6 +248,7 @@ a:hover, a:active {
 
 .alimento-graph-proteine {
         background-color: #5bc0eb;
+        border-bottom-left-radius: 2px;
 }
 .alimento-graph-lipidi {
         background-color: #fa7921;
@@ -243,6 +258,7 @@ a:hover, a:active {
 }
 .alimento-graph-fibra {
         background-color: #9bc53d;
+        border-bottom-right-radius: 2px;
 }
 
 #suggested {
@@ -268,6 +284,10 @@ a:hover, a:active {
         text-align: center;
         background-color: #fa7921;
         color: white;
+}
+#suggested.open .button span {
+    display: inline-block;
+    transform: rotate(180deg);
 }
 .alimenti.suggested {
         overflow-x: scroll;

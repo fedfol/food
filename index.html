@@ -19,7 +19,7 @@
         v-bind:alimento="item">
       </alimento-item>
     </ul>
-    <ul class="alimenti">
+    <ul class="alimenti unselected">
       <alimento-item
         v-for="item in alimenti.unselected"
         v-bind:alimento="item">
@@ -27,7 +27,7 @@
     </ul>
     <div id="suggested" v-bind:class="{ open: isOpen }">
       <div class="suggested-buttons">
-        <div class="button suggestion" v-on:click="isOpen = !isOpen">HELP ME</div>
+        <div class="button suggestion" v-on:click="isOpen = !isOpen">HELP ME <span><i class="fas fa-chevron-circle-up"></i></span></div>
       </div>
       <ul class="alimenti suggested">
         <alimento-item

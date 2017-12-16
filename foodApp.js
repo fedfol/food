@@ -145,21 +145,22 @@ Vue.component('alimento-item', {
                   {{ alimento.alimento }}  <a target="_blank" :href="alimento.url"><i class="fas fa-external-link-alt"></i></a>\
                </h3>\
                <p>\
-                  {{ alimento.porzione }} - {{ alimento.kcal }}kcal\
+                  {{ alimento.porzione }} (x{{ alimento.qty }}) - {{ alimento.kcal * alimento.qty }}kcal\
                </p>\
+                <div class="config">\
+                  <span class="porzioni">\
+                    <span class="button minus" v-on:click="if (alimento.qty > 1) {alimento.qty -= 1; updateProperties(alimento)}">-</span>\
+                    <span class="button plus" v-on:click="alimento.qty += 1; updateProperties(alimento)">+</span>\
+                  </span>\
+                  <span class="button add" v-on:click="toggleSelect(alimento)"><i class="fas fa-cart-plus"></i> Ordina</span>\
+                  <span class="button add" v-on:click="toggleSelect(alimento)"><i class="fas fa-check"></i> Mangiato</span>\
+                </div>\
                <div class="alimento-graph">\
                  <span class="alimento-graph-proteine" :style="{ width: getPerc(alimento).proteine }"></span>\
                  <span class="alimento-graph-lipidi" :style="{ width: getPerc(alimento).lipidi }"></span>\
                  <span class="alimento-graph-carboidrati" :style="{ width: getPerc(alimento).carboidrati }"></span>\
                  <span class="alimento-graph-fibra" :style="{ width: getPerc(alimento).fibra }"></span>\
                </div>\
-                <div class="config">\
-                  <span class="porzioni">\
-                    <span class="button minus" v-on:click="if (alimento.qty > 1) {alimento.qty -= 1; updateProperties(alimento)}">-</span>\
-                    <span class="button add" v-on:click="toggleSelect(alimento)">SELECT x{{ alimento.qty }}</span>\
-                    <span class="button plus" v-on:click="alimento.qty += 1; updateProperties(alimento)">+</span>\
-                  </span>\
-                </div>\
               </li>',
   methods: {
     toggleSelect: function (alimento) {
